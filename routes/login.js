@@ -2,15 +2,29 @@
 var router = express.Router();
 
 module.exports = function (passport) {
+    //console.log(passport)
+    //return router;
     
-    router.get('/login', passport.authenticate('google', { scope : ['https://www.googleapis.com/auth/plus.profile.emails.read'] }));
+    //router.get('/login', passport.authenticate('google', { scope : ['https://www.googleapis.com/auth/plus.profile.emails.read'] }));
+    //router.get('/login', passport.authenticate('local'));//, { scope : ['https://www.googleapis.com/auth/plus.profile.emails.read'] }));
     
     // the callback after google has authenticated the user
-    router.get('/.auth/login/google/callback',
+    /*router.get('/.auth/login/google/callback',
             passport.authenticate('google', {
+                successRedirect : '/#/jobs',
+                failureRedirect : '/Login'
+            }
+        )
+    );*/
+    //--begin
+    router.get('/login',
+        passport.authenticate('local', {
             successRedirect : '/#/jobs',
-            failureRedirect : '/Login'
-    }));
+            failureRedirect : '/#/jobs'
+            }
+        )
+    );
+    //--end
 
     router.get('/logout', function (req, res) {
         req.logout();

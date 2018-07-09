@@ -26,14 +26,52 @@ module.exports = function(passport) {
             // User.findOne won't fire until we have all our data back from Google
             process.nextTick(function() {
             
-            var userProfile = {
-                name: profile.displayName,
-                email: profile.emails[0].value,
-                image: profile.photos.length && profile.photos[0] && profile.photos[0].value
-            };
+                var userProfile = {
+                    name: profile.displayName,
+                    email: profile.emails[0].value,
+                    image: profile.photos.length && profile.photos[0] && profile.photos[0].value
+                };
 
-            // try to find the user based on their google id
-            findUser(userProfile.email, function(err, user) {
+                // try to find the user based on their google id
+                //findUser(userProfile.email, function(err, user) {
+                findUser('boatcy@gmail.com', function(err, user) {
+                    console.log(user)
+                    if (err) return cb(err);
+
+                    if (user) {
+                        user.Authorized = true;
+                        user.ImageUrl = userProfile.image;
+                        return cb(null, user);
+                    } 
+                    else {
+                        return cb(null, {
+                            Name: userProfile.name,
+                            Email: userProfile.email,
+                            ImageUrl: userProfile.image,
+                            Authorized: false
+                        });
+                    }
+                });
+        });
+    }));
+    //--begin
+    var LocalStrategy = require('passport-local').Strategy;
+    passport.use('local', new LocalStrategy(
+        function (username, password, cb) {
+            console.log('bibaodi')
+            var user = {
+                id: '1',
+                username: 'admin',
+                password: 'pass'
+            }; // 可以配置通过数据库方式读取登陆账号
+            var userProfile = {
+                name: 'admin',
+                email: 'boatcyg@gmail.com',
+                image: null
+            };
+            console.log('bibaodi....')
+            findUser('boatcyg@gmail.com', function(err, user) {
+                console.log(user)
                 if (err) return cb(err);
 
                 if (user) {
@@ -50,6 +88,9 @@ module.exports = function(passport) {
                     });
                 }
             });
-        });
-    }));
+            return done(null, user);
+        }
+    ));
+    
+    //--end
 };
