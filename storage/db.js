@@ -267,8 +267,11 @@ function createOrModifyVideo(req, cb) {
             request.addParameter('Name', TYPES.NVarChar, req.name);
             request.addParameter('Width', TYPES.Int, req.width);
             request.addParameter('Height', TYPES.Int, req.height);
-            request.addParameter('DurationSeconds', TYPES.Real, req.durationSeconds);
+            //request.addParameter('DurationSeconds', TYPES.Real, req.durationSeconds); //del by bibaodi for not have this column in database
             request.addParameter('FramesPerSecond', TYPES.Real, req.framesPerSecond);
+            //--begin
+            request.addParameter('FramesNum', TYPES.Float, 202)
+            //--end
 
             var table = {
                 columns: [ { name: '[Name]', type: TYPES.VarChar } ],
