@@ -59,32 +59,30 @@ module.exports = function(passport) {
     passport.use('local', new LocalStrategy(
         function (username, password, cb) {
             console.log('bibaodi')
-            username='user0001'
-            password='password000988'
             if (username != '' && password != "")
             {
                 console.log('username=${username}, password=${password}');
             }
             var userProfile = {
-                name: 'admin',
-                email: 'boatcyg@gmail.com',
+                name: username,
+                email: username,
                 image: null
             };
             console.log('bibaodi....')
-            findUser('boatcyg@gmail.com', function(err, user) {
+            findUser(username, function(err, user) {
                 console.log(user)
                 if (err) return cb(err);
 
                 if (user) {
                     user.Authorized = true;
-                    user.ImageUrl = userProfile.image;
+                    user.ImageUrl = null;
                     return cb(null, user);
                 } 
                 else {
                     return cb(null, {
                         Name: userProfile.name,
                         Email: userProfile.email,
-                        ImageUrl: userProfile.image,
+                        ImageUrl: null,
                         Authorized: false
                     });
                 }

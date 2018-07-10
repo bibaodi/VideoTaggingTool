@@ -39,7 +39,7 @@ app.use(function (req, res) {
 
 app.set('port', process.env.PORT || 3000);
 
-var server = app.listen(app.get('port'), function() {
+var server = app.listen(app.get('port'), '192.168.4.147', function() {
     console.log('Express server listening on port ' + server.address().port);
 });
 
