@@ -59,11 +59,12 @@ module.exports = function(passport) {
     passport.use('local', new LocalStrategy(
         function (username, password, cb) {
             console.log('bibaodi')
-            var user = {
-                id: '1',
-                username: 'admin',
-                password: 'pass'
-            }; // 可以配置通过数据库方式读取登陆账号
+            username='user0001'
+            password='password000988'
+            if (username != '' && password != "")
+            {
+                console.log('username=${username}, password=${password}');
+            }
             var userProfile = {
                 name: 'admin',
                 email: 'boatcyg@gmail.com',
@@ -88,7 +89,6 @@ module.exports = function(passport) {
                     });
                 }
             });
-            return done(null, user);
         }
     ));
     

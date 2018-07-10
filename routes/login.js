@@ -5,19 +5,19 @@ module.exports = function (passport) {
     //console.log(passport)
     //return router;
     
-    //router.get('/login', passport.authenticate('google', { scope : ['https://www.googleapis.com/auth/plus.profile.emails.read'] }));
+    router.get('/login', passport.authenticate('google', { scope : ['https://www.googleapis.com/auth/plus.profile.emails.read'] }));
     //router.get('/login', passport.authenticate('local'));//, { scope : ['https://www.googleapis.com/auth/plus.profile.emails.read'] }));
     
     // the callback after google has authenticated the user
-    /*router.get('/.auth/login/google/callback',
+    router.get('/.auth/login/google/callback',
             passport.authenticate('google', {
                 successRedirect : '/#/jobs',
                 failureRedirect : '/Login'
             }
         )
-    );*/
+    );
     //--begin
-    router.get('/login',
+    router.post('/login',
         passport.authenticate('local', {
             successRedirect : '/#/jobs',
             failureRedirect : '/#/jobs'
@@ -40,7 +40,7 @@ module.exports = function (passport) {
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
-    
+
     // if user is authenticated in the session, carry on 
     if (req.isAuthenticated())
         return next();
